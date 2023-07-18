@@ -11,17 +11,19 @@ public class PlayerController : MonoBehaviour
     private string[] textArray = { "fafa fooey", "baba booey" };
     private Rigidbody2D rb;
 
-    IEnumerator Start()
+    // Gets the component
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        yield return new WaitForSeconds(.1f);
-        StartCoroutine(GameManager.gm.AppearText(textArray));
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
-        Vector2 moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        rb.velocity = moveVector * moveSpeed;
-       
+        // Moves the player if the textbox is not open
+        if (!GameManager.gm.textBox.activeSelf)
+        {
+            Vector2 moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            rb.velocity = moveVector * moveSpeed;
+        }
     }
 }
