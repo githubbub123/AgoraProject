@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     public GameObject textBox;
     public TextMeshProUGUI textObject;
     public float textSpeed = .1f;
+    public float textBoxAppearSpeed = .005f;
+    public string[] texts;
 
+    private int textArrayIndex;
     private RectTransform textBoxTransform;
 
     void Start()
@@ -20,9 +23,11 @@ public class GameManager : MonoBehaviour
         textBox.SetActive(false);
     }
 
-    public IEnumerator AppearText(string text)
+    public IEnumerator AppearText(string[] newTextArray)
     {
-        StartCoroutine(SubText(text));
+        // Replacing the text array and making the first line appear
+        texts = newTextArray;
+        StartCoroutine(SubText(newTextArray[0]));
 
         // Tweening the text box to appear
         if (!textBox.activeSelf)
@@ -31,19 +36,18 @@ public class GameManager : MonoBehaviour
             textBoxTransform.localScale = new Vector3(1, 0, 1);
             for (float i = 0; i < 1.1; i += .1f)
             {
-                print(i);
                 textBoxTransform.localScale = new Vector3(1, i, 1);
-                yield return new WaitForSeconds(.005f);
+                yield return new WaitForSeconds(textBoxAppearSpeed);
             }
         }
     }
 
     public IEnumerator SubText(string text)
     {
-        // Subbing in the text over time
-        for (int i = 0; i < text.Length; i++)
+        // Subbing text so it flows across the screen
+        for (int i = 0; i-1 < text.Length; i++)
         {
-            textObject.text = text.Substring(1, i);
+            textObject.text = text.Substring(0, i);
             yield return new WaitForSeconds(textSpeed);
         }
     }
@@ -53,12 +57,12 @@ public class GameManager : MonoBehaviour
         // Tweening the box to disappear
         if (textBox.activeSelf)
         {
-            print("disap");
+            textArrayIndex = 0;
             textBoxTransform.localScale = new Vector3(1, 1, 1);
             for (float i = 1; i > 0; i -= .1f)
             {
                 textBoxTransform.localScale = new Vector3(1, i, 1);
-                yield return new WaitForSeconds(.005f);
+                yield return new WaitForSeconds(textBoxAppearSpeed);
             }
             textBox.SetActive(false);
         }
@@ -69,7 +73,24 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-           // StartCoroutine(DisappearText());
+            // Text box interaciton
+            if (texts != null)
+            {
+                // Getting the current text in the text that we need to display array.
+                textArrayIndex += 1;
+
+                // If there is another text to display, display it. Otherwise, disappear the text box
+                if (texts.Length >= textArrayIndex + 1)
+                {
+                    StartCoroutine(SubText(texts[textArrayIndex]));
+                }
+                else
+                {
+                    StartCoroutine(DisappearText());
+                }
+            }
+
+            // Interacting with objects
         }
     }
 }

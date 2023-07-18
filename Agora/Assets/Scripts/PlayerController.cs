@@ -6,44 +6,22 @@ public class PlayerController : MonoBehaviour
 {
 
     // Variables
-    public Transform moveToTransform;
-    public float moveToSpeed = 4f;
-    public float collisionCheckSize = 1f;
-    public LayerMask unwalkable;
+    public float moveSpeed = 4f;
 
-    void Start()
+    private string[] textArray = { "fafa fooey", "baba booey" };
+    private Rigidbody2D rb;
+
+    IEnumerator Start()
     {
-        //StartCoroutine(GameManager.gm.AppearText("eevyyjfthfthdyftdthfytuftuyfytudthdtyhftdftde"));
+        rb = GetComponent<Rigidbody2D>();
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(GameManager.gm.AppearText(textArray));
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // Moves the player towards the move point
-        transform.position = Vector3.MoveTowards(transform.position, moveToTransform.position, moveToSpeed * Time.deltaTime);
-
-        // Checks if the player wants to move.
-        if (Vector3.Distance(transform.position, moveToTransform.position) == 0)
-        {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-
-            // Moving the move point and thus our player will move to it
-            if (Mathf.Abs(horizontalInput) == 1f)
-            {
-                Vector3 horizontalMoveVector = new Vector3(horizontalInput, 0, 0);
-                if (!Physics2D.OverlapCircle(moveToTransform.position + horizontalMoveVector, collisionCheckSize, unwalkable))
-                {
-                    moveToTransform.position += horizontalMoveVector;
-                }
-            }
-            else if (Mathf.Abs(verticalInput) == 1f)
-            {
-                Vector3 verticalMoveVector = new Vector3(0, verticalInput, 0); ;
-                if (!Physics2D.OverlapCircle(moveToTransform.position + verticalMoveVector, collisionCheckSize, unwalkable))
-                {
-                    moveToTransform.position += verticalMoveVector;
-                }
-            }
-        }
+        Vector2 moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        rb.velocity = moveVector * moveSpeed;
+       
     }
 }
