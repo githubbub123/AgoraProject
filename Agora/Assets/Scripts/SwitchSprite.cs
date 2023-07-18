@@ -24,5 +24,22 @@ public class SwitchSprite : MonoBehaviour
         {
             spriteRend.sprite = sprites[1];
         }
+        if (spriteRend.sprite == sprites[0] && Input.GetKeyDown(KeyCode.A))
+        {
+            spriteRend.sprite = sprites[3];
+        }
+        if (spriteRend.sprite == sprites[1] && Input.GetKeyDown(KeyCode.A))
+        {
+            spriteRend.sprite = sprites[2];
+        }
+        if (spriteRend.sprite == sprites[3] && Input.GetKeyDown(KeyCode.D))
+        {
+            spriteRend.sprite = sprites[0];
+        }
+        if (spriteRend.sprite == sprites[2] && Input.GetKeyDown(KeyCode.D))
+        {
+            spriteRend.sprite = sprites[1];
+        }
+
     }
 }
