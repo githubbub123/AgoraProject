@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public float textSpeed = .025f;
     public float textBoxAppearSpeed = .005f;
     public PlayerController playerScript;
-    public bool isInteracting;
 
     private string[] texts;
     private int textArrayIndex;
@@ -218,8 +217,10 @@ public class GameManager : MonoBehaviour
     {
         // Pushes an object in a direction
         Rigidbody2D rb = currentInteractObj.gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = moveDirection;
+        Vector2 newMoveDirection = new Vector2(moveDirection.x, moveDirection.y);
+        rb.velocity += newMoveDirection * 10;
+        //rb.constraints = RigidbodyConstraints2D.None;
         yield return new WaitForSeconds(1);
-        rb.velocity = new Vector2(0, 0);
+        //rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }
