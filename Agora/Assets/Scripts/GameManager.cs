@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,14 +10,19 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
     public GameObject textBox;
     public GameObject choiceBox;
+    public TextMeshProUGUI[] choices;
     public TextMeshProUGUI textObject;
     public float textSpeed = .1f;
     public float textBoxAppearSpeed = .005f;
-    public string[] texts;
+    public PlayerController playerScript;
 
+    private string[] texts;
     private int textArrayIndex;
+    private int choiceIndex;
     private bool textDisplayed = false;
     private bool appearing = false;
+    private string[] choiceTexts;
+    private CanInteractWith currentInteractObj;
 
     void Start()
     {
@@ -25,13 +31,14 @@ public class GameManager : MonoBehaviour
         choiceBox.SetActive(false);
     }
 
-    public IEnumerator AppearText(string[] newTextArray)
+    public IEnumerator AppearText(CanInteractWith scr)
     {
         // Replacing the text array and making the first line appear
         appearing = true;
+        currentInteractObj = scr;
         textArrayIndex = 0;
-        texts = newTextArray;
-        StartCoroutine(SubText(newTextArray[textArrayIndex]));
+        texts = scr.interactionMessage;
+        StartCoroutine(SubText(scr.interactionMessage[textArrayIndex]));
 
         // Tweening the text box to appear
         StartCoroutine(AppearBackground(textBox));
@@ -40,10 +47,34 @@ public class GameManager : MonoBehaviour
         appearing = false;
     }
 
-    //public IEnumerator AppearChoice()
-    //{
+    public void SelectChoice(float verticalInput)
+    {
+        int num = Convert.ToInt32(Mathf.Round(verticalInput));
+        choiceIndex += num;
 
-    //}
+        // Looping choices
+        if (choiceIndex > 1)
+        {
+            choiceIndex = 0;
+        }
+        else if (choiceIndex < 0)
+        {
+            choiceIndex = 1;
+        }
+
+        choices[0].text = choiceTexts[0];
+        choices[1].text = choiceTexts[1];
+        choices[choiceIndex].text = choiceTexts[choiceIndex] + " <";
+    }
+
+    public void AppearChoice(string[] selectedChoiceTexts)
+    {
+        // Making the choice box appear and auto selecting a choice
+        StartCoroutine(AppearBackground(choiceBox));
+        choiceTexts = selectedChoiceTexts;
+        choiceIndex = -1;
+        SelectChoice(1);
+    }
 
     public IEnumerator SubText(string text)
     {
@@ -89,22 +120,28 @@ public class GameManager : MonoBehaviour
 
             for (float i = 1; i > 0; i -= .1f)
             {
+                if (appearing)
+                {
+                   yield return null;
+                }
                 objectTransform.localScale = new Vector3(1, i, 1);
                 yield return new WaitForSeconds(textBoxAppearSpeed);
             }
+
+           // texts = null;
             object1.SetActive(false);
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (currentInteractObj != null)
         {
-            // Text box interaciton
-            if (texts != null)
+            // Text boxes
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 // Getting the current text in the text that we need to display array.
-                bool hasntDisplayedAllText = texts.Length > textArrayIndex+1;
+                bool hasntDisplayedAllText = texts.Length > textArrayIndex + 1;
 
                 // If there is another text to display, display it. Otherwise, disappear the text box
                 if (appearing == false)
@@ -120,13 +157,59 @@ public class GameManager : MonoBehaviour
                         textArrayIndex += 1;
                         StartCoroutine(SubText(texts[textArrayIndex]));
                     }
+                    else if (currentInteractObj.choices.Length > 0 && !choiceBox.activeSelf)
+                    {
+                        AppearChoice(currentInteractObj.choices);
+                    }
                     else
                     {
+
+                        if (choiceBox.activeSelf && choiceIndex == 0)
+                        {
+                            CallInteractionFunction(currentInteractObj.interactionId, choiceIndex);
+                        }
+
                         StartCoroutine(DisappearBackground(textBox));
                         StartCoroutine(DisappearBackground(choiceBox));
+                        currentInteractObj = null;
                     }
                 }
             }
+
+            // Choices
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                SelectChoice(-1);
+            }
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                SelectChoice(1);
+            }
         }
+    }
+
+    // Interaction functions
+    private void CallInteractionFunction(int interactionId, int choiceChosen)
+    {
+        // Finds the object's interaction id, then executes the functions connected to it
+        // For choice chosen, 0 is top option and 1 is bottom option
+
+        if (interactionId == 1)
+        {
+            if (choiceChosen == 0)
+            {
+                Vector3 moveDirection = playerScript.oldMoveVector;
+                StartCoroutine(Push(moveDirection));
+            }
+        }
+    }
+
+    private IEnumerator Push(Vector3 moveDirection)
+    {
+        // Pushes an object in a direction
+        Rigidbody2D rb = currentInteractObj.gameObject.GetComponent<Rigidbody2D>();
+        rb.velocity = moveDirection;
+        yield return new WaitForSeconds(1);
+        rb.velocity = new Vector2(0, 0);
     }
 }

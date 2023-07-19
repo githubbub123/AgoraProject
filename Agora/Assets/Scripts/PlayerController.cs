@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private string[] textArray = { "fafa fooey", "baba booey" };
     private Rigidbody2D rb;
-    private Vector3 oldMoveVector;
+    public Vector3 oldMoveVector;
 
     // Gets the component
     void Start()
@@ -25,14 +25,15 @@ public class PlayerController : MonoBehaviour
         Vector2 moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // Getting an old move vector for detecting interactions
-        if (moveVector != new Vector2(0, 0))
-        {
-            oldMoveVector = new Vector3(moveVector.x, moveVector.y, 0);
-        }
 
         // If the textbox is not open do some epic things
         if (!GameManager.gm.textBox.activeSelf)
         {
+            if (moveVector != new Vector2(0, 0))
+            {
+                oldMoveVector = new Vector3(moveVector.x, moveVector.y, 0);
+            }
+
             rb.velocity = moveVector * moveSpeed;
 
             // Interacting with objects
@@ -43,8 +44,8 @@ public class PlayerController : MonoBehaviour
 
                 if (interactions[0] != null)
                 {
-                    string[] texts = interactions[0].GetComponent<CanInteractWith>().interactionMessage;
-                    StartCoroutine(GameManager.gm.AppearText(texts));
+                    CanInteractWith scr = interactions[0].GetComponent<CanInteractWith>();
+                    StartCoroutine(GameManager.gm.AppearText(scr));
                 }
             }
         }
