@@ -17,11 +17,16 @@ public class LevelChanger : MonoBehaviour
     public void FadeToLevel()
     {
         animator.SetTrigger("FadeOut");
+        StartCoroutine(OnFadeComplete());
+        
     }
-    public void OnFadeComplete()
+
+    IEnumerator OnFadeComplete()
     {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("DreamWorldBackup");
     }
+
 
     // Update is called once per frame
     void Update()
