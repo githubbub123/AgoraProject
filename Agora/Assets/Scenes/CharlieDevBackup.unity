@@ -3876,7 +3876,7 @@ GameObject:
   - component: {fileID: 533260170}
   - component: {fileID: 533260169}
   - component: {fileID: 533260168}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3900,7 +3900,7 @@ MonoBehaviour:
   choices:
   - Yes
   - No
-  interactionId: 2
+  interactionId: 3
 --- !u!50 &533260169
 Rigidbody2D:
   serializedVersion: 4

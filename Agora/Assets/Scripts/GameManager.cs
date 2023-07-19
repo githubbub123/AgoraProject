@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -206,9 +207,18 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(Push(moveDirection));
             }
         }
-        else if (interactionId == 2) {
-            if (choiceChosen == 0) {
+        else if (interactionId == 2)
+        {
+            if (choiceChosen == 0)
+            {
                 FindObjectOfType<SwitchSprite>().PutMaskOn();
+            }
+        }
+        else if (interactionId == 3)
+        {
+            if (choiceChosen == 0)
+            {
+                FindObjectOfType<LevelChanger>().FadeToLevel();
             }
         }
     }
