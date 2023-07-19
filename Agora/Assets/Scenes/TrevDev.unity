@@ -2707,7 +2707,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1844394663
 MonoBehaviour:
@@ -3830,7 +3830,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4903478868423322614, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4903478868423322614, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3874,7 +3874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287238091538352036, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_Name
-      value: PlayerKit
+      value: MainGameNewLights
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
