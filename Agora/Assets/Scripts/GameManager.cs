@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public float textSpeed = .025f;
     public float textBoxAppearSpeed = .005f;
     public PlayerController playerScript;
+    public bool isInteracting;
 
     private string[] texts;
     private int textArrayIndex;
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
     private bool textDisplayed = false;
     private bool appearing = false;
     private string[] choiceTexts;
-    private CanInteractWith currentInteractObj;
+    public CanInteractWith currentInteractObj;
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(.1f);
         appearing = false;
+        StartCoroutine(DisappearBackground(choiceBox));
     }
 
     public void SelectChoice(float verticalInput)
@@ -96,8 +98,8 @@ public class GameManager : MonoBehaviour
     public IEnumerator AppearBackground(GameObject object1)
     {
         // Tweening the text box to appear
-        if (!object1.activeSelf)
-        {
+       // if (!object1.activeSelf)
+        //{
             Transform objectTransform = object1.GetComponent<RectTransform>();
             object1.SetActive(true);
 
@@ -107,7 +109,7 @@ public class GameManager : MonoBehaviour
                 objectTransform.localScale = new Vector3(1, i, 1);
                 yield return new WaitForSeconds(textBoxAppearSpeed);
             }
-        }
+        //}
     }
 
     public IEnumerator DisappearBackground(GameObject object1)
@@ -120,16 +122,19 @@ public class GameManager : MonoBehaviour
 
             for (float i = 1; i > 0; i -= .1f)
             {
-                if (appearing)
+                if (appearing == true)
                 {
-                   yield return null;
+                    print("stopped");
+                    break;
                 }
                 objectTransform.localScale = new Vector3(1, i, 1);
                 yield return new WaitForSeconds(textBoxAppearSpeed);
             }
 
-           // texts = null;
-            object1.SetActive(false);
+            if (appearing == false)
+            {
+                object1.SetActive(false);
+            }
         }
     }
 

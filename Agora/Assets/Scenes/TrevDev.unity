@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  interactionRange: 0.2
+  interactionRange: 0.25
   interactionLayer:
     useTriggers: 1
     useLayerMask: 1
@@ -2955,6 +2955,8 @@ MonoBehaviour:
   textSpeed: 0.025
   textBoxAppearSpeed: 0.005
   playerScript: {fileID: 20354256}
+  isInteracting: 0
+  currentInteractObj: {fileID: 0}
 --- !u!4 &1600170712
 Transform:
   m_ObjectHideFlags: 0

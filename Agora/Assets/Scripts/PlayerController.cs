@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         // Getting an old move vector for detecting interactions
 
         // If the textbox is not open do some epic things
-        if (!GameManager.gm.textBox.activeSelf)
+        if (GameManager.gm.currentInteractObj == null)
         {
             if (moveVector != new Vector2(0, 0))
             {
@@ -35,23 +35,23 @@ public class PlayerController : MonoBehaviour
             }
 
             rb.velocity = moveVector * moveSpeed;
-
-            // Interacting with objects
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Collider2D[] interactions = new Collider2D[1];
-                Physics2D.OverlapCircle(transform.position + oldMoveVector, interactionRange, interactionLayer, interactions);
-
-                if (interactions[0] != null)
-                {
-                    CanInteractWith scr = interactions[0].GetComponent<CanInteractWith>();
-                    StartCoroutine(GameManager.gm.AppearText(scr));
-                }
-            }
         }
         else
         {
             rb.velocity = new Vector2(0, 0);
+        }
+
+        // Interacting with objects
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null)
+        {
+            Collider2D[] interactions = new Collider2D[1];
+            Physics2D.OverlapCircle(transform.position + oldMoveVector, interactionRange, interactionLayer, interactions);
+
+            if (interactions[0] != null)
+            {
+                CanInteractWith scr = interactions[0].GetComponent<CanInteractWith>();
+                StartCoroutine(GameManager.gm.AppearText(scr));
+            }
         }
     }
 }
