@@ -180,6 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 667299ee93b8743c78c9b25fd87e8775, type: 3}
+--- !u!4 &144282865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5299114362668285525, guid: 667299ee93b8743c78c9b25fd87e8775, type: 3}
+  m_PrefabInstance: {fileID: 144282864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &227873704
 GameObject:
   m_ObjectHideFlags: 0
@@ -4727,8 +4732,8 @@ RectTransform:
   - {fileID: 574274504}
   - {fileID: 1878931269}
   - {fileID: 817030515}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 144282865}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7185,3 +7190,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c3b608d0f409046d3974e9d8ebd416d1, type: 3}
   - {fileID: 21300000, guid: f19cf64c068f44313b51bad1b707b9ce, type: 3}
   - {fileID: 21300000, guid: 41a29870f2b5e43ad9f5668cb5f923de, type: 3}
+  spritesWithMask: []

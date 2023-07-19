@@ -7301,6 +7301,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 841e037913b18423bab13a6690f656b4, type: 3}
   - {fileID: 21300000, guid: e4024966e8b1f4f4e822e46033c0c96b, type: 3}
   - {fileID: 21300000, guid: a4da6a29b048e4cc1bf3c3803a044083, type: 3}
+  spritesWithMask:
+  - {fileID: 21300000, guid: 36760338d13474190a0f867064d988d0, type: 3}
+  - {fileID: 21300000, guid: 5cfb79ea97e0448f3807b8f222cf6529, type: 3}
+  - {fileID: 21300000, guid: 2210ed29c042e4a589e06e4ad2cb9c2f, type: 3}
+  - {fileID: 21300000, guid: 1988147fd710a422d8d0c0816a664ccc, type: 3}
 --- !u!1 &2075959794
 GameObject:
   m_ObjectHideFlags: 0
