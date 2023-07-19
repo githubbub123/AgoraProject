@@ -5,7 +5,9 @@ using UnityEngine;
 public class SwitchSprite : MonoBehaviour
 {
     public Sprite[] sprites;
+    public Sprite[] spritesWithMask;
     private SpriteRenderer spriteRend;
+
 
     // Start is called before the first frame update
     void Start()
@@ -13,12 +15,23 @@ public class SwitchSprite : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
     }
 
+    public void PutMaskOn()
+    {
+        sprites = spritesWithMask;
+        spriteRend.sprite = sprites[1];
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PutMaskOn();
+        }
+
         //forward facing
-        if (spriteRend.sprite == sprites[2] && Input.GetKeyDown(KeyCode.W)) {
+        if (spriteRend.sprite == sprites[2] && Input.GetKeyDown(KeyCode.W))
+        {
             spriteRend.sprite = sprites[3];
         }
         if (spriteRend.sprite == sprites[1] && Input.GetKeyDown(KeyCode.W))
