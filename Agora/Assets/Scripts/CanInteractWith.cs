@@ -6,5 +6,7 @@ public class CanInteractWith : MonoBehaviour
 {
     // Interaction message
     public string[] interactionMessage;
-    public bool canPush;
+    public string[] choices;
+    public int interactionId;
+
 }
