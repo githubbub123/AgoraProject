@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject choiceBox;
     public TextMeshProUGUI[] choices;
     public TextMeshProUGUI textObject;
-    public float textSpeed = .1f;
+    public float textSpeed = .025f;
     public float textBoxAppearSpeed = .005f;
     public PlayerController playerScript;
 
@@ -200,6 +200,11 @@ public class GameManager : MonoBehaviour
             {
                 Vector3 moveDirection = playerScript.oldMoveVector;
                 StartCoroutine(Push(moveDirection));
+            }
+        }
+        else if (interactionId == 2) {
+            if (choiceChosen == 0) {
+                FindObjectOfType<SwitchSprite>().PutMaskOn();
             }
         }
     }

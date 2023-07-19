@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Variables
     public float moveSpeed = 4f;
-    public float interactionRange = .5f;
+    public float interactionRange = .2f;
     public ContactFilter2D interactionLayer;
 
     private string[] textArray = { "fafa fooey", "baba booey" };
