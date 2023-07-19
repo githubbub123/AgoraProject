@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private string[] textArray = { "fafa fooey", "baba booey" };
     private Rigidbody2D rb;
+    private Vector2 moveVector;
     public Vector3 oldMoveVector;
 
     // Gets the component
@@ -21,19 +22,16 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Moves the player if the textbox is not open
-        Vector2 moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        // Getting an old move vector for detecting interactions
-
-        // If the textbox is not open do some epic things
+        // If the player is not doing an interaction then proceed
         if (GameManager.gm.currentInteractObj == null)
         {
+            // Getting an old move vector for detecting interactions
             if (moveVector != new Vector2(0, 0))
             {
                 oldMoveVector = new Vector3(moveVector.x, moveVector.y, 0);
             }
 
+            // Move the player
             rb.velocity = moveVector * moveSpeed;
         }
         else
@@ -45,6 +43,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Interacting with objects
+        moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null)
         {
             Collider2D[] interactions = new Collider2D[1];
