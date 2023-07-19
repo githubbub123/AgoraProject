@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null)
         {
             Collider2D[] interactions = new Collider2D[1];
-            Physics2D.OverlapCircle(transform.position + oldMoveVector, interactionRange, interactionLayer, interactions);
+            Vector3 interactVector = new Vector3(interactionRange / 2, interactionRange / 2, 0);
+            Physics2D.OverlapCircle(transform.position + oldMoveVector - interactVector, interactionRange, interactionLayer, interactions);
 
             if (interactions[0] != null)
             {
