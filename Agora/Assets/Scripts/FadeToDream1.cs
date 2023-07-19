@@ -15,10 +15,7 @@ public class FadeToDream1 : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag("Bed"))
-        {
-            FindObjectOfType<LevelChanger>().FadeToNextLevel();
-        }
+
     }
         // Update is called once per frame
         void Update()
