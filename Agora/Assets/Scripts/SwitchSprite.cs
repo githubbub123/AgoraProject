@@ -25,45 +25,25 @@ public class SwitchSprite : MonoBehaviour
     void Update()
     {
         if (!GameManager.gm.textBox.activeSelf) {
-            // forward facing
-            if (spriteRend.sprite == sprites[2] && Input.GetKeyDown(KeyCode.W))
+            float verticalInput = Input.GetAxisRaw("Vertical");
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            
+            if (verticalInput == 1)
             {
-                spriteRend.sprite = sprites[3];
-            }
-            if (spriteRend.sprite == sprites[1] && Input.GetKeyDown(KeyCode.W))
-            {
+                // Backward
                 spriteRend.sprite = sprites[0];
             }
-
-            //backward facing
-            if (spriteRend.sprite == sprites[0] && Input.GetKeyDown(KeyCode.S))
+             if (verticalInput == -1 || horizontalInput == 1)
             {
+                // Forward right
                 spriteRend.sprite = sprites[1];
             }
-            if (spriteRend.sprite == sprites[3] && Input.GetKeyDown(KeyCode.S))
+             if (horizontalInput == -1)
             {
+                // Left
                 spriteRend.sprite = sprites[2];
             }
-
-            //left
-            if (spriteRend.sprite == sprites[0] && Input.GetKeyDown(KeyCode.A))
-            {
-                spriteRend.sprite = sprites[3];
-            }
-            if (spriteRend.sprite == sprites[1] && Input.GetKeyDown(KeyCode.A))
-            {
-                spriteRend.sprite = sprites[2];
-            }
-
-            //right
-            if (spriteRend.sprite == sprites[3] && Input.GetKeyDown(KeyCode.D))
-            {
-                spriteRend.sprite = sprites[0];
-            }
-            if (spriteRend.sprite == sprites[2] && Input.GetKeyDown(KeyCode.D))
-            {
-                spriteRend.sprite = sprites[1];
-            }
+            
         }
 
     }

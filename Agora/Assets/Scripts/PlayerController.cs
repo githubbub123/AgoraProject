@@ -40,7 +40,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
         }
+    }
 
+    void Update()
+    {
         // Interacting with objects
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null)
         {
