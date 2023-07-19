@@ -4030,6 +4030,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4154718321117586407, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154718321203482214, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4903478868423322614, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_RootOrder
       value: 4
