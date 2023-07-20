@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     private string[] choiceTexts;
     public CanInteractWith currentInteractObj;
 
+    public GameObject sleepingMask;
+
     void Start()
     {
         gm = this;
@@ -219,6 +221,14 @@ public class GameManager : MonoBehaviour
             if (choiceChosen == 0)
             {
                 FindObjectOfType<LevelChanger>().FadeToLevel();
+            }
+        }
+        else if (interactionId == 4)
+        {
+            if (choiceChosen == 0)
+            {
+                Destroy(sleepingMask);
+                FindObjectOfType<SwitchSprite>().PutMaskOn();
             }
         }
     }
