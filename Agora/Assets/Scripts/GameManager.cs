@@ -236,8 +236,8 @@ public class GameManager : MonoBehaviour
             else if (choiceChosen == 1)
             {
                 // Climbing the chair
-                print("climb");
                 StartCoroutine(ClimbChair(true, currentInteractObj));
+                DisplayInteractionDialoge("InteractionId1");
 
             }
         }
