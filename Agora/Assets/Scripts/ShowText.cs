@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShowText : MonoBehaviour
 {
+    private bool saidText = false;
     // Start is called before the first frame update
     public CanInteractWith scr;
 
@@ -20,6 +21,10 @@ public class ShowText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(FindObjectOfType<SwitchSprite>().sprites == FindObjectOfType<SwitchSprite>().spritesWithMask && saidText == false) {
+            scr.interactionMessage = new string[] {"(Help Agora find her bed to go to sleep.)", "(She cannot see with her sleeping mask on.)"};
+            StartCoroutine(DisplayTheText());
+            saidText = true;
+        }
     }
 }
