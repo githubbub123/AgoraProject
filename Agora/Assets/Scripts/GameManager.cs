@@ -23,7 +23,12 @@ public class GameManager : MonoBehaviour
     private bool textDisplayed = false;
     private bool appearing = false;
     private string[] choiceTexts;
+
+    private Vector3 oldPlayerPos;
+    private int playerElevated;
+
     public CanInteractWith currentInteractObj;
+    private bool publicDebounce = false;
 
     public GameObject sleepingMask;
 
@@ -36,6 +41,10 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator AppearText(CanInteractWith scr)
     {
+        if (publicDebounce)
+        {
+           yield return null;
+        }
         // Replacing the text array and making the first line appear
         appearing = true;
         currentInteractObj = scr;
@@ -53,6 +62,11 @@ public class GameManager : MonoBehaviour
 
     public void SelectChoice(float verticalInput)
     {
+        if (publicDebounce)
+        {
+            return;
+        }
+
         int num = Convert.ToInt32(Mathf.Round(verticalInput));
         choiceIndex += num;
 
@@ -171,9 +185,13 @@ public class GameManager : MonoBehaviour
                     else
                     {
 
-                        if (choiceBox.activeSelf && choiceIndex == 0)
+                        if (choiceBox.activeSelf)
                         {
-                            CallInteractionFunction(currentInteractObj.interactionId, choiceIndex);
+                           bool dontDIsappear = CallInteractionFunction(currentInteractObj.interactionId, choiceIndex);
+                            if (dontDIsappear)
+                            {
+                                return;
+                            }
                         }
 
                         StartCoroutine(DisappearBackground(textBox));
@@ -195,14 +213,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void DisplayInteractionDialoge(string interactionName)
+    {
+        CanInteractWith scr = GameObject.Find(interactionName).GetComponent<CanInteractWith>();
+        StartCoroutine(AppearText(scr));
+    }
     // Interaction functions
-    private void CallInteractionFunction(int interactionId, int choiceChosen)
+    private bool CallInteractionFunction(int interactionId, int choiceChosen)
     {
         // Finds the object's interaction id, then executes the functions connected to it
         // For choice chosen, 0 is top option and 1 is bottom option
 
         if (interactionId == 1)
         {
+            print(choiceChosen);
             if (choiceChosen == 0)
             {
                 // Pushing the chair
@@ -212,7 +236,8 @@ public class GameManager : MonoBehaviour
             else if (choiceChosen == 1)
             {
                 // Climbing the chair
-                ClimbChair();
+                StartCoroutine(ClimbChair(true, currentInteractObj));
+                DisplayInteractionDialoge("InteractionId1");
 
             }
         }
@@ -220,13 +245,15 @@ public class GameManager : MonoBehaviour
         {
             if (choiceChosen == 0)
             {
-                FindObjectOfType<SwitchSprite>().PutMaskOn();
+                // Gets the player off the chair
+                StartCoroutine(ClimbChair(false, currentInteractObj));
             }
         }
         else if (interactionId == 3)
         {
             if (choiceChosen == 0)
             {
+                // Changse the level
                 FindObjectOfType<LevelChanger>().FadeToLevel();
             }
         }
@@ -239,6 +266,45 @@ public class GameManager : MonoBehaviour
                 FindObjectOfType<SwitchSprite>().PutMaskOn();
             }
         }
+        else if (interactionId == 5)
+        {
+            if (choiceChosen == 0)
+            {
+                // Acquiring tony
+                print(playerElevated);
+                if (playerElevated > 0)
+                {
+                    currentInteractObj.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    currentInteractObj.gameObject.transform.SetParent(playerScript.gameObject.transform);
+                    currentInteractObj.gameObject.transform.position = playerScript.gameObject.transform.position + new Vector3(-.25f, .6f, 0);
+
+                    string[] texts = new string[] { "Congratulations. You have acquired my son.", "Keep him for now, he is quite the handful.", "(Glurrggg)", "Oh my, I am quite hungry.", "Go retrieve my food." };
+                    string[] choices = new string[] { "Yes", "Yes" };
+
+                    ChangeWaddlesQuest(texts, choices);
+                }
+                else
+                {
+                    DisplayInteractionDialoge("InteractionId5");
+                    return true;
+                }
+            }
+        }
+        else if (interactionId == 6)
+        {
+            if (choiceChosen == 0)
+            {
+                // Resetting chair position
+                GameObject chair = GameObject.Find("Chair");
+                chair.transform.position = new Vector3(9.75f, -1.65f, 1);
+            }
+        }
+        else if (interactionId == 7)
+        {
+            DisplayInteractionDialoge("InteractionId7");
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator Push(Vector3 moveDirection)
@@ -252,21 +318,67 @@ public class GameManager : MonoBehaviour
         //rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
-    private void ClimbChair()
+    private IEnumerator ClimbChair(bool climbing, CanInteractWith myInteractObj)
     {
         // Getting the player and chair transforms then lerping the player to be ontop of the player
-        Transform chairTransform = currentInteractObj.gameObject.GetComponent<Transform>();
+        float speed = 10f;
+
+        Transform chairTransform = myInteractObj.gameObject.GetComponent<Transform>();
         Transform playerTransform = playerScript.gameObject.GetComponent<Transform>();
 
         playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        float speed = 10f;
+        myInteractObj.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        Vector3 destination;
 
-        while (Vector3.Distance(playerTransform.position, chairTransform.position) <= .05f)
+        publicDebounce = true;
+
+        if (climbing)
         {
-            float lerpSpeed = speed * Time.deltaTime;
-            Vector3.MoveTowards(playerTransform.position, chairTransform.position, lerpSpeed);
+            destination = chairTransform.position + new Vector3(0, 1f, 0);
+            oldPlayerPos = playerTransform.position;
+        }
+        else
+        {
+            destination = oldPlayerPos;
         }
 
-        playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, 1);
+        while (Vector3.Distance(playerTransform.position, destination) > 0)
+        {
+            print("gon");
+            float lerpSpeed = speed * Time.deltaTime;
+            playerTransform.position = Vector3.MoveTowards(playerTransform.position, destination, lerpSpeed);
+            yield return new WaitForSeconds(0);
+        }
+
+        print("finsihed");
+        if (climbing)
+        {
+            myInteractObj.interactionMessage = new string[] {"(Do you want to climb off the chair?)"};
+            myInteractObj.choices = new string[] { "Yes", "No"};
+            myInteractObj.interactionId = 2;
+            playerElevated += 1;
+        }
+        else
+        {
+            myInteractObj.interactionMessage = new string[] { "What a convinent chair!"};
+            myInteractObj.choices = new string[] { "Push", "Climb"};
+            myInteractObj.interactionId = 1;
+            playerElevated -= 1;
+
+            playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            myInteractObj.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, 0);
+        }
+
+        publicDebounce = false;
+    }
+
+    private void ChangeWaddlesQuest(string[] texts, string[] choices)
+    {
+        GameObject Waddles = GameObject.Find("Waddles");
+        CanInteractWith scr = Waddles.GetComponent<CanInteractWith>();
+        scr.interactionMessage = texts;
+        scr.choices = choices;
+        scr.interactionId = 7;
     }
 }
