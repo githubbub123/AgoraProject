@@ -5,21 +5,21 @@ using UnityEngine;
 public class ShowText : MonoBehaviour
 {
     // Start is called before the first frame update
+    public CanInteractWith scr;
+
     void Start()
     {
-        StartCoroutine(MakeTextAppear());
+        StartCoroutine(DisplayTheText());
     }
 
-    private IEnumerator MakeTextAppear() {
+    private IEnumerator DisplayTheText() {
         yield return new WaitForSeconds(1f);
-        string[] text = { "bavaf}" };
-        StartCoroutine(GameManager.gm.AppearBackground(text));
+        StartCoroutine(GameManager.gm.AppearText(scr));
+
     }
-
-
     // Update is called once per frame
     void Update()
     {
-        //FindObjectOfType<GameManager>().AppearBackground(choiceBox));
+        
     }
 }
