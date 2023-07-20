@@ -24,7 +24,7 @@ public class LevelChanger : MonoBehaviour
     IEnumerator OnFadeComplete()
     {
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("RealWorld1");
+        SceneManager.LoadScene("DreamWorldByChar");
     }
 
 
