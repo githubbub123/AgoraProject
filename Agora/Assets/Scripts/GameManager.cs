@@ -205,8 +205,15 @@ public class GameManager : MonoBehaviour
         {
             if (choiceChosen == 0)
             {
+                // Pushing the chair
                 Vector3 moveDirection = playerScript.oldMoveVector;
                 StartCoroutine(Push(moveDirection));
+            }
+            else if (choiceChosen == 1)
+            {
+                // Climbing the chair
+                ClimbChair();
+
             }
         }
         else if (interactionId == 2)
@@ -227,6 +234,7 @@ public class GameManager : MonoBehaviour
         {
             if (choiceChosen == 0)
             {
+                // Putting on the sleeping mask
                 Destroy(sleepingMask);
                 FindObjectOfType<SwitchSprite>().PutMaskOn();
             }
@@ -242,5 +250,23 @@ public class GameManager : MonoBehaviour
         //rb.constraints = RigidbodyConstraints2D.None;
         yield return new WaitForSeconds(1);
         //rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private void ClimbChair()
+    {
+        // Getting the player and chair transforms then lerping the player to be ontop of the player
+        Transform chairTransform = currentInteractObj.gameObject.GetComponent<Transform>();
+        Transform playerTransform = playerScript.gameObject.GetComponent<Transform>();
+
+        playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        float speed = 10f;
+
+        while (Vector3.Distance(playerTransform.position, chairTransform.position) <= .05f)
+        {
+            float lerpSpeed = speed * Time.deltaTime;
+            Vector3.MoveTowards(playerTransform.position, chairTransform.position, lerpSpeed);
+        }
+
+        playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, 1);
     }
 }
