@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TrevDev.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/DreamWorldBackup.unity
+    path: Assets/Scenes/RealWorld1.unity
     guid: 81143cc4e90904f7d89f720481e9827f
   m_configObjects: {}
