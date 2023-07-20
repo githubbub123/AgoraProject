@@ -301,6 +301,7 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 7)
         {
+            // Accepting Waddles offer to get his food
             DisplayInteractionDialoge("InteractionId7");
             return true;
         }
