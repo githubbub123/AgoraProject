@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Variables
     public float moveSpeed = 4f;
-    public float interactionRange = .2f;
+    private float interactionRange = .5f;
     public ContactFilter2D interactionLayer;
 
     private string[] textArray = { "fafa fooey", "baba booey" };
@@ -22,22 +22,43 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // If the player is not doing an interaction then proceed
-        if (GameManager.gm.currentInteractObj == null)
+        // Getting an old move vector for detecting interactions
+        if (moveVector != new Vector2(0, 0))
         {
-            // Getting an old move vector for detecting interactions
-            if (moveVector != new Vector2(0, 0))
+            if (GameManager.gm.currentInteractObj != null)
             {
-                oldMoveVector = new Vector3(moveVector.x, moveVector.y, 0);
+                if (GameManager.gm.currentInteractObj.interactionId == 1)
+                {
+                    return;
+                }
             }
 
-            // Move the player
-            rb.velocity = moveVector * moveSpeed;
+            oldMoveVector = new Vector3(moveVector.x, moveVector.y, 0);
         }
-        else
+
+        // If the player is not doing an interaction then proceed
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
         {
-            rb.velocity = new Vector2(0, 0);
+            if (GameManager.gm.currentInteractObj == null)
+            {
+
+                // Move the player
+                rb.velocity = moveVector * moveSpeed;
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, 0);
+            }
         }
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
+         Vector3 interactVector = new Vector3(interactionRange / 2, interactionRange / 2, 0);
+        Gizmos.DrawWireSphere(transform.position + oldMoveVector - interactVector, interactionRange);
     }
 
     void Update()
