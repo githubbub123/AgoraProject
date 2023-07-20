@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private bool textDisplayed = false;
     private bool appearing = false;
     private string[] choiceTexts;
-
+    private AudioSource textScrollSFX;
     private Vector3 oldPlayerPos;
     private int playerElevated;
 
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gm = this;
+        textScrollSFX = GetComponent<AudioSource>();
         textBox.SetActive(false);
         choiceBox.SetActive(false);
     }
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
         textDisplayed = false;
         for (int i = 0; i-1 < text.Length; i++)
         {
+            textScrollSFX.PlayOneShot(textScrollSFX.clip, 1);
             if (textDisplayed == true)
             {
                 break;
