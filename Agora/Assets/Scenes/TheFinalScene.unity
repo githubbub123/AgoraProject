@@ -5045,7 +5045,7 @@ MonoBehaviour:
   choices:
   - LEAVE
   - STAY
-  interactionId: 0
+  interactionId: 3
 --- !u!61 &393719911
 BoxCollider2D:
   m_ObjectHideFlags: 0
