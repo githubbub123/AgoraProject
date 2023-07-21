@@ -24,21 +24,26 @@ public class LevelChanger : MonoBehaviour
     IEnumerator OnFadeComplete()
     {
         yield return new WaitForSeconds(1);
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("CharlieDevBackup"))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenu"))
+        {
+            SceneManager.LoadScene("CharlieDevBackup");
+            animator.Play("Fade_In");
+        }
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("CharlieDevBackup"))
         {
             SceneManager.LoadScene("DreamWorldByChar");
-            animator.SetTrigger("Fade_In");
+            animator.Play("Fade_In");
         }
 
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("DreamWorldByChar"))
         {
             SceneManager.LoadScene("TheFinalScene");
-            animator.SetTrigger("Fade_In");
+            animator.Play("Fade_In");
         }
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("TheFinalScene"))
         {
             SceneManager.LoadScene("Credits");
-            animator.SetTrigger("Fade_In");
+            animator.Play("Fade_In");
         }
     }
 
