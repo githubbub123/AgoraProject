@@ -254,17 +254,23 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 3)
         {
-            if (choiceChosen == 0)
-            {
-                // Changse the level
-                FindObjectOfType<LevelChanger>().FadeToLevel();
-            }
+            
+                if (choiceChosen == 0)
+                {
+                    // Changse the level
+                    FindObjectOfType<LevelChanger>().FadeToLevel();
+                }
+
         }
         else if (interactionId == 4)
         {
             if (choiceChosen == 0)
             {
                 // Putting on the sleeping mask
+                CanInteractWith scr = GameObject.Find("Bed").GetComponent<CanInteractWith>();
+                scr.interactionMessage = new string[] { "(Would you like to go to bed?)" };
+                scr.choices = new string[] { "Yes", "No" };
+
                 Destroy(sleepingMask);
                 FindObjectOfType<SwitchSprite>().PutMaskOn();
             }
