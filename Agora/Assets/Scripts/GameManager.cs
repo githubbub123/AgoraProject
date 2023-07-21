@@ -356,6 +356,7 @@ public class GameManager : MonoBehaviour
             // Stabbing waddles
             if (choiceChosen == 0)
             {
+                Destroy(GameObject.Find("DreamWrld"));
                 publicDebounce = true;
                 badEnding = true;
                 playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -465,6 +466,7 @@ public class GameManager : MonoBehaviour
         else if (interactionId == 18)
         {
             // First leaving
+            Destroy(GameObject.Find("DreamWrld"));
             GameObject.Find("SharpenerLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
             GameObject.Find("LadderLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
             GameObject.Find("DoorLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
