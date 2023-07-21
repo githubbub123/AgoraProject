@@ -253,11 +253,19 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 3)
         {
-            if (choiceChosen == 0)
+            if (FindObjectOfType<SwitchSprite>().sprites == FindObjectOfType<SwitchSprite>().spritesWithMask)
             {
-                // Changse the level
-                FindObjectOfType<LevelChanger>().FadeToLevel();
+                string[] texts = new string[] { "(Would you like to go to bed?)" };
+                string[] choices = new string[] { "Yes", "No" };
+
+                if (choiceChosen == 0)
+                {
+                    // Changse the level
+                    FindObjectOfType<LevelChanger>().FadeToLevel();
+                }
+
             }
+
         }
         else if (interactionId == 4)
         {

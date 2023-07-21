@@ -4940,10 +4940,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionMessage:
-  - (Would you like to go to bed?)
-  choices:
-  - Yes
-  - No
+  - I can't sleep without my sleeping mask.
+  choices: []
   interactionId: 3
 --- !u!50 &533260169
 Rigidbody2D:
