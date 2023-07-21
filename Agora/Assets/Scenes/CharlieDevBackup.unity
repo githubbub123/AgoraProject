@@ -5371,6 +5371,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4154718321072730695, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4154718321117586405, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_Intensity
       value: 0.15
@@ -8259,7 +8263,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.075243115, y: 0.1354382}
+  m_Offset: {x: -0.070503235, y: 0.1401782}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -8270,7 +8274,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7291243, y: 0.42815018}
+  m_Size: {x: 1.004034, y: 0.66514206}
   m_EdgeRadius: 0
 --- !u!1 &875646838
 GameObject:
@@ -8433,10 +8437,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.54555595, y: 0.08541906}
+  m_Offset: {x: -0.5950241, y: 0.08541906}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -8447,7 +8451,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.529773, y: 2.006763}
+  m_Size: {x: 0.6892986, y: 2.006763}
   m_EdgeRadius: 0
 --- !u!114 &919547846
 MonoBehaviour:
@@ -19706,10 +19710,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.32348037, y: 0.08541906}
+  m_Offset: {x: -0.35847616, y: 0.08541906}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -19720,7 +19724,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.97392416, y: 2.006763}
+  m_Size: {x: 0.9039326, y: 2.006763}
   m_EdgeRadius: 0
 --- !u!114 &2080315337
 MonoBehaviour:
