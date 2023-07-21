@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DreamWorldByChar.unity
     guid: 8256d1f9104ed406185f40828a28dc4f
+  - enabled: 1
+    path: Assets/Scenes/TheFinalScene.unity
+    guid: 98dcf9e0d117748ea82c8d1eaa99e1c0
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 7d2a3afc0deb040709a8db56a69abc66
   m_configObjects: {}
