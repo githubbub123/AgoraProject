@@ -363,6 +363,7 @@ public class GameManager : MonoBehaviour
                 GameObject.Find("StabPencil").GetComponent<SpriteRenderer>().enabled = true;
                 GameObject.Find("StabPencil").GetComponent<AudioSource>().Play();
                 GameObject.Find("LargePencil").GetComponent<SpriteRenderer>().enabled = false;
+                FindObjectOfType<LevelChanger>().FadeToLevel();
             }
             
         }
@@ -459,6 +460,7 @@ public class GameManager : MonoBehaviour
             // i forgor
             publicDebounce = true;
             playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            FindObjectOfType<LevelChanger>().FadeToLevel();
         }
         else if (interactionId == 18)
         {
