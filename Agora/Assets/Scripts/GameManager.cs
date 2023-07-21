@@ -474,6 +474,28 @@ public class GameManager : MonoBehaviour
             string[] choices = new string[] {};
             ChangeWaddlesQuest(texts, choices, 0);
         }
+        else if (interactionId == 19)
+        {
+            if (choiceChosen == 0)
+            {
+                DisplayInteractionDialoge("InteractionId19");
+                return true;
+            }
+        }
+        else if (interactionId == 20)
+        {
+            GameObject.Find("Waddles").GetComponent<AudioSource>().Play();
+            GameObject.Find("Waddles").GetComponent<SpriteRenderer>().enabled = false;
+
+            CanInteractWith scr = GameObject.Find("Waddles").GetComponent<CanInteractWith>();
+            scr.interactionMessage = new string[] { "It's time to go." };
+            scr.choices = new string[] {};
+            scr.interactionId = 0;
+
+            CanInteractWith scr2 = GameObject.Find("Door").GetComponent<CanInteractWith>();
+            scr2.interactionMessage = new string[] { "(Do you want to leave now?)" };
+            scr2.choices = new string[] {"Leave", "Stay" };
+        }
 
         return false;
     }

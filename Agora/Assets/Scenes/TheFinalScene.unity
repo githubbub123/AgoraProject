@@ -770,6 +770,60 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.91681004, y: 0.9168098}
   m_EdgeRadius: 0
+--- !u!1 &240722845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240722846}
+  - component: {fileID: 240722847}
+  m_Layer: 0
+  m_Name: InteractionId19
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &240722846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240722845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 393736181}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &240722847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240722845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e245cae50217e14ab4bcd4e6aae0ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionMessage:
+  - Waddles...
+  - I know your not real...
+  - But I'm going to miss you.
+  - We've been through so much together.
+  - Goodbye, Waddles.
+  choices:
+  - Time
+  - to go
+  interactionId: 20
 --- !u!1 &254726981
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,12 +5093,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionMessage:
-  - I'm worried about leaving for college.
-  - Maybe I should just go to bed.
-  - (Do you wish to leave for college or stay and sleep in?)
-  choices:
-  - LEAVE
-  - STAY
+  - I'm leaving for college soon..
+  - I think I should say goodbye to a good friend first.
+  choices: []
   interactionId: 3
 --- !u!61 &393719911
 BoxCollider2D:
@@ -5225,6 +5276,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &393736181 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4154718320647657902, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
+  m_PrefabInstance: {fileID: 794785893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &449052151
 GameObject:
   m_ObjectHideFlags: 0
@@ -5374,7 +5430,7 @@ MonoBehaviour:
   - I couldn't sleep last night.
   - I'm not sure I want to leave.
   choices: []
-  interactionId: 0
+  interactionId: 3
 --- !u!50 &533260169
 Rigidbody2D:
   serializedVersion: 4
@@ -5581,6 +5637,7 @@ GameObject:
   - component: {fileID: 653822505}
   - component: {fileID: 653822504}
   - component: {fileID: 653822503}
+  - component: {fileID: 653822506}
   m_Layer: 9
   m_Name: Waddles
   m_TagString: Untagged
@@ -5616,11 +5673,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionMessage:
-  - I know you're not real, but I'm going to miss you Waddles.
-  - '*Waddles winks at you*'
-  - (Waddles wants you to go to the door.)
-  choices: []
-  interactionId: 0
+  - (Say goodbye to Waddles?)
+  choices:
+  - Yes
+  - No
+  interactionId: 19
 --- !u!61 &653822504
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5699,6 +5756,102 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &653822506
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653822501}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e28507f4dd6bc4d55a3c5ad8661401f0, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &660934245
 GameObject:
   m_ObjectHideFlags: 0
@@ -5744,7 +5897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionMessage:
   - I finished packing.
-  - I dont think I want to leave for college tomorrow.
+  - It's almost time to leave...
   - (Agora is stressed.)
   choices: []
   interactionId: 0
@@ -5763,6 +5916,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &745146407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 745146408}
+  - component: {fileID: 745146409}
+  m_Layer: 0
+  m_Name: BadEndingScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &745146408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745146407}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.07491815, y: -4.809882, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &745146409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745146407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488006808a1b60c498c96447cbbed445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &760675871
 GameObject:
   m_ObjectHideFlags: 0
@@ -8726,6 +8923,10 @@ PrefabInstance:
     - target: {fileID: 6287238091538352036, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_Name
       value: MainGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287238091538352036, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6365592643618954941, guid: 850d2d1964a8bbe4496f1646fb0fa618, type: 3}
       propertyPath: m_AnchorMax.x
