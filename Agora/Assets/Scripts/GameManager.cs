@@ -281,8 +281,12 @@ public class GameManager : MonoBehaviour
             {
                 // Acquiring tony
                 print(playerElevated);
-                if (playerElevated == 0)
+                if (playerElevated > 0)
                 {
+                    CanInteractWith scr2 = GameObject.Find("Tony").GetComponent<CanInteractWith>();
+                    scr2.interactionMessage = new string[] { "(You have acquired Tony.)" };
+                    scr2.choices = new string[] { };
+
                     currentInteractObj.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                     currentInteractObj.gameObject.transform.SetParent(playerScript.gameObject.transform);
                     currentInteractObj.gameObject.transform.position = playerScript.gameObject.transform.position + new Vector3(-.25f, .6f, 0);
@@ -316,7 +320,7 @@ public class GameManager : MonoBehaviour
             GameObject.Find("WaddleFoodLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
             GameObject.Find("LadderLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
             GameObject.Find("ChairLight").SetActive(false);
-
+            
             CanInteractWith scr = GameObject.Find("Chair").GetComponent<CanInteractWith>();
             scr.interactionMessage = new string[] { "(This chair is broken.)" };
             scr.choices = new string[] { };
@@ -325,9 +329,12 @@ public class GameManager : MonoBehaviour
             scr2.interactionMessage = new string[] { "(Do you want to sharpen your pencil?)" };
             scr2.choices = new string[] {"Yes", "No" };
 
-            string[] texts = new string[] { "Chop chop now." };
-            string[] choices = new string[] {};
+            CanInteractWith scr3 = GameObject.Find("FishyFood").GetComponent<CanInteractWith>();
+            scr3.interactionMessage = new string[] { "This is my fish-in-a-bowl." , "It's a rare breed that breathes oxygen." , "(Acquire fish?)" };
+            scr3.choices = new string[] { "Yes", "No" };
 
+            string[] texts = new string[] { "Chop chop now. You haven't messed up anything yet so I can't help you." };
+            string[] choices = new string[] { };
             ChangeWaddlesQuest(texts, choices, 0);
 
             return true;
@@ -335,20 +342,129 @@ public class GameManager : MonoBehaviour
         else if (interactionId == 8)
         {
             // Sharpening pencil
-            StartCoroutine(SharpenPencil());
+            if (choiceChosen == 0)
+            {
+                StartCoroutine(SharpenPencil());
+
+                CanInteractWith scr2 = GameObject.Find("Sharpener").GetComponent<CanInteractWith>();
+                scr2.interactionMessage = new string[] { "(Your pencil is sharpened.)" };
+                scr2.choices = new string[] {};
+            }
         }
         else if (interactionId == 9)
         {
             // Stabbing waddles
-            publicDebounce = true;
-            playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            GameObject.Find("Blood").GetComponent<ParticleSystem>().Play();
-            GameObject.Find("StabPencil").GetComponent<SpriteRenderer>().enabled = true;
-            GameObject.Find("StabPencil").GetComponent<AudioSource>().Play();
+            if (choiceChosen == 0)
+            {
+                publicDebounce = true;
+                playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                GameObject.Find("Blood").GetComponent<ParticleSystem>().Play();
+                GameObject.Find("StabPencil").GetComponent<SpriteRenderer>().enabled = true;
+                GameObject.Find("StabPencil").GetComponent<AudioSource>().Play();
+                GameObject.Find("LargePencil").GetComponent<SpriteRenderer>().enabled = false;
+            }
+            
         }
         else if (interactionId == 10)
         {
-            StartCoroutine(PushLadder(currentInteractObj));
+            // Pushing the ladder
+            if (choiceChosen == 0)
+            {
+                GameObject.Find("LargePencil").GetComponent<SpriteRenderer>().enabled = false;
+                string[] texts = new string[] { "Hello my child. Do you wish for me to reset the position of an object that you clumsily pushed?" };
+                string[] choices = new string[] { "Yes", "No" };
+
+                ChangeWaddlesQuest(texts, choices, 11);
+
+                StartCoroutine(PushLadder(currentInteractObj));
+            }
+        }
+        else if (interactionId == 11)
+        {
+            // Resetting ladder position
+            if (choiceChosen == 0)
+            {
+                GameObject ladder = GameObject.Find("Ladder");
+                ladder.transform.position = new Vector3(6, 1.5f, 0);
+            }
+              
+        }
+        else if (interactionId == 12)
+        {
+            if (choiceChosen == 0)
+            {
+                if (playerElevated > 0)
+                {
+                    GameObject.Find("WaddleFood").SetActive(false);
+
+                    CanInteractWith scr2 = GameObject.Find("FishyFood").GetComponent<CanInteractWith>();
+                    scr2.interactionMessage = new string[] { "(You have acquired the food.)" };
+                    scr2.choices = new string[] { };
+
+                    string[] texts = new string[] { "Well done, my child.", "I have one final request of you.", "Go to your door and leave this room." };
+                    string[] choices = new string[] {"What?", "What?" };
+                    ChangeWaddlesQuest(texts, choices, 18);
+                }
+                else
+                {
+                    DisplayInteractionDialoge("InteractionId5");
+                    return true;
+                }
+            }
+            
+        }
+        else if (interactionId == 13)
+        {
+            string[] texts = new string[] { "Agora, go and leave the room." };
+            string[] choices = new string[] { };
+            ChangeWaddlesQuest(texts, choices, 0);
+
+            CanInteractWith scr = GameObject.Find("DoorToLeave").GetComponent<CanInteractWith>();
+            scr.choices = new string[] { "I won't", "I won't" };
+            scr.interactionId = 14;
+        }
+        else if (interactionId == 14)
+        {
+            string[] texts = new string[] { "Agora, I promise you everything will be alright.\" , \"Please go out there." };
+            string[] choices = new string[] { };
+            ChangeWaddlesQuest(texts, choices, 0);
+
+            CanInteractWith scr = GameObject.Find("DoorToLeave").GetComponent<CanInteractWith>();
+            scr.choices = new string[] { "I can't", "I can't" };
+            scr.interactionId = 16;
+        }
+        else if (interactionId == 15)
+        {
+            string[] texts = new string[] { "Agora, I promise you everything will be alright." , "Please go out there."};
+            string[] choices = new string[] { };
+            ChangeWaddlesQuest(texts, choices, 0);
+
+            CanInteractWith scr = GameObject.Find("DoorToLeave").GetComponent<CanInteractWith>();
+            scr.interactionId = 16;
+        }
+        else if (interactionId == 16)
+        {
+            string[] texts = new string[] { "If you cannot leave by yourself...", "Know that I wil always be there for you.", "Know that every day I will be here and help you.", "Agora...", "We are here for you." };
+            string[] choices = new string[] { "Wake", "up" };
+            ChangeWaddlesQuest(texts, choices, 17);
+        }
+        else if (interactionId == 17)
+        {
+            publicDebounce = true;
+            playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        }
+        else if (interactionId == 18)
+        {
+            GameObject.Find("SharpenerLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
+            GameObject.Find("LadderLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
+            GameObject.Find("DoorLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
+
+            CanInteractWith scr = GameObject.Find("DoorToLeave").GetComponent<CanInteractWith>();
+            scr.interactionId = 13;
+
+            string[] texts = new string[] { "Go into the light." };
+            string[] choices = new string[] {};
+            ChangeWaddlesQuest(texts, choices, 0);
         }
 
         return false;
@@ -400,14 +516,14 @@ public class GameManager : MonoBehaviour
         print("finsihed");
         if (climbing)
         {
-            myInteractObj.interactionMessage = new string[] {"(Do you want to climb off the chair?)"};
+            myInteractObj.interactionMessage = new string[] {"(Do you want to climb off the object?)"};
             myInteractObj.choices = new string[] { "Yes", "No"};
             myInteractObj.interactionId = 2;
             playerElevated += 1;
         }
         else
         {
-            myInteractObj.interactionMessage = new string[] { "What a convinent chair!"};
+            myInteractObj.interactionMessage = new string[] { "What a convinent object!"};
             myInteractObj.choices = new string[] { "Push", "Climb"};
             myInteractObj.interactionId = 1;
             playerElevated -= 1;
@@ -431,7 +547,7 @@ public class GameManager : MonoBehaviour
         playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         string[] texts = new string[] { "Get that uncivilized weapon away from me." };
-        string[] choices = new string[] {"Stab", "Do not."};
+        string[] choices = new string[] {"Stab", "Do not"};
 
         CanInteractWith scr = GameObject.Find("LadderCol").GetComponent<CanInteractWith>();
         scr.interactionMessage = new string[] { "(Do you want to push the ladder off with the pencil?" };
@@ -454,10 +570,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator PushLadder(CanInteractWith myInteractObj)
     {
         publicDebounce = true;
-        string[] texts = new string[] { "Chop chop now." };
-        string[] choices = new string[] { };
-
-        ChangeWaddlesQuest(texts, choices, 0);
 
         GameObject ladder = GameObject.Find("Ladder");
         Vector3 destination = ladder.transform.position - new Vector3(0, 3f, 0);
