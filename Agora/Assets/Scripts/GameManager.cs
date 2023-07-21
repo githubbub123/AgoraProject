@@ -357,6 +357,7 @@ public class GameManager : MonoBehaviour
             if (choiceChosen == 0)
             {
                 publicDebounce = true;
+                badEnding = true;
                 playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 GameObject.Find("Blood").GetComponent<ParticleSystem>().Play();
                 GameObject.Find("StabPencil").GetComponent<SpriteRenderer>().enabled = true;
@@ -391,6 +392,7 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 12)
         {
+            // Getting waddles again
             if (choiceChosen == 0)
             {
                 if (playerElevated > 0)
@@ -415,6 +417,7 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 13)
         {
+            // Leaving 1
             string[] texts = new string[] { "Agora, go and leave the room." };
             string[] choices = new string[] { };
             ChangeWaddlesQuest(texts, choices, 0);
@@ -425,6 +428,7 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 14)
         {
+            // Leaving 2
             string[] texts = new string[] { "Agora, I promise you everything will be alright.\" , \"Please go out there." };
             string[] choices = new string[] { };
             ChangeWaddlesQuest(texts, choices, 0);
@@ -435,6 +439,7 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 15)
         {
+            // Leaving 3
             string[] texts = new string[] { "Agora, I promise you everything will be alright." , "Please go out there."};
             string[] choices = new string[] { };
             ChangeWaddlesQuest(texts, choices, 0);
@@ -444,17 +449,20 @@ public class GameManager : MonoBehaviour
         }
         else if (interactionId == 16)
         {
+            // Ending
             string[] texts = new string[] { "If you cannot leave by yourself...", "Know that I wil always be there for you.", "Know that every day I will be here and help you.", "Agora...", "We are here for you." };
             string[] choices = new string[] { "Wake", "up" };
             ChangeWaddlesQuest(texts, choices, 17);
         }
         else if (interactionId == 17)
         {
+            // i forgor
             publicDebounce = true;
             playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         }
         else if (interactionId == 18)
         {
+            // First leaving
             GameObject.Find("SharpenerLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
             GameObject.Find("LadderLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = false;
             GameObject.Find("DoorLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
