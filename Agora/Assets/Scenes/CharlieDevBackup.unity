@@ -4606,7 +4606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionMessage:
   - This is my desk where I do my homework.
-  - I haven't has to use it since school ended.
+  - I haven't had to use it since school ended this year.
   choices: []
   interactionId: 1
 --- !u!1 &387235273
@@ -4940,10 +4940,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionMessage:
-  - (Would you like to go to bed?)
-  choices:
-  - Yes
-  - No
+  - I can't sleep without my sleeping mask.
+  choices: []
   interactionId: 3
 --- !u!50 &533260169
 Rigidbody2D:
@@ -8219,7 +8217,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 23e00cd9b0443403486060691e4944a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11391,7 +11389,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.214
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
