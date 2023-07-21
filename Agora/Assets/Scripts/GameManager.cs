@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     // Variables
     public static GameManager gm;
+    public static bool badEnding;
     public GameObject textBox;
     public GameObject choiceBox;
     public TextMeshProUGUI[] choices;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     private int playerElevated;
 
     public CanInteractWith currentInteractObj;
-    private bool publicDebounce = false;
+    public bool publicDebounce = false;
 
     public GameObject sleepingMask;
 
@@ -274,7 +275,7 @@ public class GameManager : MonoBehaviour
             {
                 // Acquiring tony
                 print(playerElevated);
-                if (playerElevated > 0)
+                if (playerElevated == 0)
                 {
                     currentInteractObj.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                     currentInteractObj.gameObject.transform.SetParent(playerScript.gameObject.transform);
@@ -283,7 +284,7 @@ public class GameManager : MonoBehaviour
                     string[] texts = new string[] { "Congratulations. You have acquired my son.", "Keep him for now, he is quite the handful.", "(Glurrggg)", "Oh my, I am quite hungry.", "Go retrieve my food." };
                     string[] choices = new string[] { "Yes", "Yes" };
 
-                    ChangeWaddlesQuest(texts, choices);
+                    ChangeWaddlesQuest(texts, choices, 7);
                 }
                 else
                 {
@@ -305,8 +306,45 @@ public class GameManager : MonoBehaviour
         {
             // Accepting Waddles offer to get his food
             DisplayInteractionDialoge("InteractionId7");
+            GameObject.Find("SharpenerLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
+            GameObject.Find("WaddleFoodLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
+            GameObject.Find("LadderLight").GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
+            GameObject.Find("ChairLight").SetActive(false);
+
+            CanInteractWith scr = GameObject.Find("Chair").GetComponent<CanInteractWith>();
+            scr.interactionMessage = new string[] { "(This chair is broken.)" };
+            scr.choices = new string[] { };
+
+            CanInteractWith scr2 = GameObject.Find("Sharpener").GetComponent<CanInteractWith>();
+            scr2.interactionMessage = new string[] { "(Do you want to sharpen your pencil?)" };
+            scr2.choices = new string[] {"Yes", "No" };
+
+            string[] texts = new string[] { "Chop chop now." };
+            string[] choices = new string[] {};
+
+            ChangeWaddlesQuest(texts, choices, 0);
+
             return true;
         }
+        else if (interactionId == 8)
+        {
+            // Sharpening pencil
+            StartCoroutine(SharpenPencil());
+        }
+        else if (interactionId == 9)
+        {
+            // Stabbing waddles
+            publicDebounce = true;
+            playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            GameObject.Find("Blood").GetComponent<ParticleSystem>().Play();
+            GameObject.Find("StabPencil").GetComponent<SpriteRenderer>().enabled = true;
+            GameObject.Find("StabPencil").GetComponent<AudioSource>().Play();
+        }
+        else if (interactionId == 10)
+        {
+            StartCoroutine(PushLadder(currentInteractObj));
+        }
+
         return false;
     }
 
@@ -376,12 +414,60 @@ public class GameManager : MonoBehaviour
         publicDebounce = false;
     }
 
-    private void ChangeWaddlesQuest(string[] texts, string[] choices)
+    private IEnumerator SharpenPencil()
+    {
+        publicDebounce = true;
+        currentInteractObj.gameObject.GetComponent<AudioSource>().Play();
+        playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        yield return new WaitForSeconds(7f);
+        DisplayInteractionDialoge("InteractionId8");
+        GameObject.Find("LargePencil").GetComponent<SpriteRenderer>().enabled = true;
+        playerScript.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+        string[] texts = new string[] { "Get that uncivilized weapon away from me." };
+        string[] choices = new string[] {"Stab", "Do not."};
+
+        CanInteractWith scr = GameObject.Find("LadderCol").GetComponent<CanInteractWith>();
+        scr.interactionMessage = new string[] { "(Do you want to push the ladder off with the pencil?" };
+        scr.choices = new string[] {"Yes", "No" };
+        scr.interactionId = 10;
+
+        ChangeWaddlesQuest(texts, choices, 9);
+        publicDebounce = false;
+    }
+
+    private void ChangeWaddlesQuest(string[] texts, string[] choices, int interactionId)
     {
         GameObject Waddles = GameObject.Find("Waddles");
         CanInteractWith scr = Waddles.GetComponent<CanInteractWith>();
         scr.interactionMessage = texts;
         scr.choices = choices;
-        scr.interactionId = 7;
+        scr.interactionId = interactionId;
+    }
+
+    private IEnumerator PushLadder(CanInteractWith myInteractObj)
+    {
+        publicDebounce = true;
+        string[] texts = new string[] { "Chop chop now." };
+        string[] choices = new string[] { };
+
+        ChangeWaddlesQuest(texts, choices, 0);
+
+        GameObject ladder = GameObject.Find("Ladder");
+        Vector3 destination = ladder.transform.position - new Vector3(0, 3f, 0);
+        float speed = 10f;
+
+        while (Vector3.Distance(ladder.transform.position, destination) > 0)
+        {
+            float lerpSpeed = speed * Time.deltaTime;
+            ladder.transform.position = Vector3.MoveTowards(ladder.transform.position, destination, lerpSpeed);
+            yield return new WaitForSeconds(0);
+        }
+
+        myInteractObj.interactionMessage = new string[] { "Just bookshelves." };
+        myInteractObj.choices = new string[] { };
+        publicDebounce = false;
+
+        ladder.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }

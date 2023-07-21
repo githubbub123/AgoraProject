@@ -22,7 +22,7 @@ public class ShowText : MonoBehaviour
     void Update()
     {
         if(FindObjectOfType<SwitchSprite>().sprites == FindObjectOfType<SwitchSprite>().spritesWithMask && saidText == false) {
-            scr.interactionMessage = new string[] {"(Help Agora find her bed to go to sleep.)", "(She cannot see with her sleeping mask on.)", "(WASD/Arrow Keys to move, Spacebar to interact.)", "(Interacting with objects will reveal facts about them.)"};
+            scr.interactionMessage = new string[] {"(Help Agora find her bed to go to sleep.)", "(She cannot see with her sleeping mask on.)"};
             StartCoroutine(DisplayTheText());
             saidText = true;
         }

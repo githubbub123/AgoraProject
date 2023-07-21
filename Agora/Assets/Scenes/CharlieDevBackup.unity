@@ -4952,6 +4952,8 @@ MonoBehaviour:
   - I'm tired.
   - I can't sleep without my sleeping mask.
   - (Find Agora's sleeping mask.)
+  - (WASD/Arrow Keys to move, Spacebar to interact.)
+  - (Interacting with objects will reveal facts about them.)
   choices: []
   interactionId: 0
 --- !u!4 &660934248

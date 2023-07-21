@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         // Interacting with objects
         moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null)
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.gm.currentInteractObj == null && GameManager.gm.publicDebounce == false)
         {
             Collider2D[] interactions = new Collider2D[1];
             Vector3 interactVector = new Vector3(interactionRange / 2, interactionRange / 2, 0);
